@@ -5,7 +5,7 @@ SESSIONNAME="Rust"
 # checks if session exists
 tmux has-session -t $SESSIONNAME &> /dev/null
 
-# if session exists
+# if session does not exist
 if [ $? != 0 ] 
  then
     # goes to rustlings dir and open nvim in exercises dir
