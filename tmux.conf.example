@@ -1,0 +1,76 @@
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'o0th/tmux-nova'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @plugin 'ofirgall/tmux-keyboard-layout'
+
+### THEME ###
+set -g @nova-nerdfonts true
+set -g @nova-nerdfonts-left \u258C
+set -g @nova-nerdfonts-right \u2590
+
+set -g @nova-pane "#I #W"
+set -g @nova-rows 0
+
+### COLORS ###
+b_bg="#282C34"
+
+seg_a="#BB7CD7 #282828"
+seg_b="$b_bg #ACB2BD"
+
+inactive_bg="#1f1d2e"
+inactive_fg="#403d52"
+active_bg=$b_bg
+active_fg="#ACB2BD"
+
+set -gw window-status-current-style bold
+set -g "@nova-status-style-bg" "$inactive_bg"
+set -g "@nova-status-style-fg" "$inactive_fg"
+set -g "@nova-status-style-active-bg" "$active_bg"
+set -g "@nova-status-style-active-fg" "$active_fg"
+
+set -g "@nova-pane-active-border-style" "$active_fg"
+set -g "@nova-pane-border-style" "$active_bg"
+
+### STATUS BAR ###
+set -g @nova-segment-prefix "#{?client_prefix,PREFIX,}"
+set -g @nova-segment-prefix-colors "$seg_b"
+
+set -g @nova-segment-session "#{session_name}"
+set -g @nova-segment-session-colors "$seg_a"
+
+set -g @nova-segment-whoami "#(whoami)@#h"
+set -g @nova-segment-whoami-colors "$seg_a"
+
+set -g @nova-segment-cpu " #(~/.tmux/plugins/tmux-cpu/scripts/cpu_percentage.sh) #(~/.tmux/plugins/tmux-cpu/scripts/ram_percentage.sh)"
+set -g @nova-segment-cpu-colors "$seg_b"
+
+set -g @batt_icon_status_charging '↑'
+set -g @batt_icon_status_discharging '↓'
+set -g @batt_icon_status_charged \uf240
+set -g @nova-segment-battery "#{battery_icon_status} #{battery_percentage}"
+set -g @nova-segment-battery-colors "$seg_b"
+
+set -g @nova-segments-0-left "session"
+set -g @nova-segments-0-right "battery whoami"
+
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'github_username/plugin_name#branch'
+# set -g @plugin 'git@github.com:user/plugin'
+# set -g @plugin 'git@bitbucket.com:user/plugin'
+
+# Keybidings
+bind v copy-mode
+bind | split-window -h
+bind - split-window -v
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
